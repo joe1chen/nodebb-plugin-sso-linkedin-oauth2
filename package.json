@@ -1,0 +1,31 @@
+{
+  "name": "nodebb-plugin-sso-linkedin",
+  "version": "0.1.0",
+  "description": "NodeBB LinkedIn SSO",
+  "main": "library.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "linkedin",
+    "sso",
+    "single sign on",
+    "registration"
+  ],
+  "author": {
+    "name": "Joseph Chen",
+    "email": "joseph.chen@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin/issues"
+  },
+  "readme": "",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "passport-linkedin-oauth2": "^1.1.1"
+  }
+}
