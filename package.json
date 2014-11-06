@@ -1,11 +1,11 @@
 {
-  "name": "nodebb-plugin-sso-linkedin",
+  "name": "nodebb-plugin-sso-linkedin-oauth2",
   "version": "0.1.0",
-  "description": "NodeBB LinkedIn SSO",
+  "description": "NodeBB LinkedIn SSO OAuth2",
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin"
+    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin-oauth2"
   },
   "keywords": [
     "nodebb",
@@ -18,12 +18,12 @@
   "author": "Joseph Chen <joseph.chen@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin/issues"
+    "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin-oauth2/issues"
   },
   "dependencies": {
     "passport-linkedin-oauth2": "^1.1.1"
   },
-  "homepage": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin",
+  "homepage": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin-oauth2",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
