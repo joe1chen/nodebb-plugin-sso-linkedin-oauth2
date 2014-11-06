@@ -26,6 +26,7 @@
   "readme": "",
   "readmeFilename": "README.md",
   "dependencies": {
-    "passport-linkedin-oauth2": "^1.1.1"
+    "passport-linkedin-oauth2": "^1.1.1",
+    "shortid": "^2.1.2"
   }
 }

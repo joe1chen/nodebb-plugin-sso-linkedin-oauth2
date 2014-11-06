@@ -4,6 +4,7 @@
 	var User = module.parent.require('./user'),
 		meta = module.parent.require('./meta'),
 		db = module.parent.require('../src/database'),
+		shortId = require('shortid'),
 		passport = module.parent.require('passport'),
 		passportLinkedIn = require('passport-linkedin-oauth2').Strategy,
 		fs = module.parent.require('fs'),
@@ -123,7 +124,7 @@
 					}
 
 					if (!uid) {
-						User.create({username: handle, email: email}, function(err, uid) {
+						User.create({username: shortId.generate(), email: email}, function(err, uid) {
 							if(err) {
 								return callback(err);
 							}
