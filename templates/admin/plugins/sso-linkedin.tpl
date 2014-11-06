@@ -9,8 +9,8 @@
 			your application details here.
 		</p>
 		<br />
-		<input type="text" name="id" title="OAuth User Token" class="form-control input-lg" placeholder="OAuth User Token"><br />
-		<input type="text" name="secret" title="OAuth User Secret" class="form-control" placeholder="OAuth User Secret">
+		<input type="text" name="id" title="API Key" class="form-control input-lg" placeholder="API Key"><br />
+		<input type="text" name="secret" title="Secret Key" class="form-control" placeholder="Secret Key">
 		<p class="help-block">
 			The appropriate "OAuth 2.0 Redirect URLs" is your NodeBB's URL with `/auth/linkedin/callback` appended to it.
 		</p>
