@@ -15,17 +15,17 @@
     "single sign on",
     "registration"
   ],
-  "author": {
-    "name": "Joseph Chen",
-    "email": "joseph.chen@gmail.com"
-  },
+  "author": "Joseph Chen <joseph.chen@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin/issues"
   },
-  "readme": "",
-  "readmeFilename": "README.md",
   "dependencies": {
     "passport-linkedin-oauth2": "^1.1.1"
+  },
+  "homepage": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
