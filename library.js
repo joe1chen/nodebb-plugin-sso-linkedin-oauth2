@@ -79,7 +79,8 @@
 				var success = function(uid, merge) {
 					// Save linkedin-specific information to the user
 					var data = {
-						linkedInId: linkedInId
+						linkedInId: linkedInId,
+						fullname: handle
 					};
 
 					if (!merge) {
