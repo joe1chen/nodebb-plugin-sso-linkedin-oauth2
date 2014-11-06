@@ -9,6 +9,7 @@
 		fs = module.parent.require('fs'),
 		path = module.parent.require('path'),
 		async = module.parent.require('async'),
+		winston = module.parent.require('winston'),
 		nconf = module.parent.require('nconf');
 
 	var constants = Object.freeze({
@@ -154,7 +155,22 @@
 		});
 
 		callback(null, custom_header);
-	}
+	};
+
+	LinkedIn.deleteUserData = function(uid, callback) {
+		async.waterfall([
+			async.apply(User.getUserField, uid, 'linkedInId'),
+			function(oAuthIdToDelete, next) {
+				db.deleteObjectField('linkedInId:uid', oAuthIdToDelete, next);
+			}
+		], function(err) {
+			if (err) {
+				winston.error('[sso-linkedin] Could not remove OAuthId data for uid ' + uid + '. Error: ' + err);
+				return callback(err);
+			}
+			callback(null, uid);
+		});
+	};
 
 	module.exports = LinkedIn;
 }(module));
