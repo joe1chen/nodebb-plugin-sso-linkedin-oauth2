@@ -40,7 +40,8 @@
 					clientID: settings['id'],
 					clientSecret: settings['secret'],
 					callbackURL: nconf.get('url') + '/auth/linkedin/callback',
-					scope: ['r_fullprofile', 'r_emailaddress', 'r_network']
+					scope: ['r_fullprofile', 'r_emailaddress', 'r_network'],
+					state: true
 				}, function(accessToken, refreshToken, profile, done) {
 					LinkedIn.login(profile.id, profile.displayName, profile._json.emailAddress, profile._json.pictureUrl, (profile._json.location ? profile._json.location.name : null), profile._json.publicProfileUrl, function(err, user) {
 						if (err) {
@@ -55,8 +56,7 @@
 					url: '/auth/linkedin',
 					callbackURL: '/auth/linkedin/callback',
 					icon: 'fa-linkedin-square',
-					scope: '',
-					state: 'SOME_STATE' // Required to pass in a value for state
+					scope: ''
 				});
 			}
 
