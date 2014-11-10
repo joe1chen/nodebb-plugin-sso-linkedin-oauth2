@@ -22,13 +22,13 @@
 
 	var LinkedIn = {};
 
-	LinkedIn.init = function(app, middleware, controllers, callback) {
+	LinkedIn.init = function(params, callback) {
 		function render(req, res, next) {
 			res.render('admin/plugins/sso-linkedin', {});
 		}
 
-		app.get('/admin/plugins/sso-linkedin', middleware.admin.buildHeader, render);
-		app.get('/api/admin/plugins/sso-linkedin', render);
+		params.router.get('/admin/plugins/sso-linkedin', params.middleware.admin.buildHeader, render);
+		params.router.get('/api/admin/plugins/sso-linkedin', render);
 
 		callback();
 	}
