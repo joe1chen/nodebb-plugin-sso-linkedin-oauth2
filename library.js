@@ -40,7 +40,7 @@
 					clientID: settings['id'],
 					clientSecret: settings['secret'],
 					callbackURL: nconf.get('url') + '/auth/linkedin/callback',
-					scope: ['r_fullprofile', 'r_emailaddress', 'r_network'],
+					scope: ['r_basicprofile', 'r_emailaddress'],
 					state: true
 				}, function(accessToken, refreshToken, profile, done) {
 					LinkedIn.login(profile.id, profile.displayName, profile._json.emailAddress, profile._json.pictureUrl, (profile._json.location ? profile._json.location.name : null), profile._json.publicProfileUrl, function(err, user) {
