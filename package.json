@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sso-linkedin-oauth2",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "NodeBB LinkedIn SSO OAuth2",
   "main": "library.js",
   "repository": {
