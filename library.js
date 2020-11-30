@@ -1,16 +1,16 @@
 (function(module) {
 	"use strict";
 
-	var User = module.parent.require('./user'),
-		meta = module.parent.require('./meta'),
-		db = module.parent.require('../src/database'),
-		passport = module.parent.require('passport'),
-		passportLinkedIn = require('passport-linkedin-oauth2').Strategy,
-		fs = module.parent.require('fs'),
-		path = module.parent.require('path'),
-		async = module.parent.require('async'),
-		winston = module.parent.require('winston'),
-		nconf = module.parent.require('nconf');
+	var User = require.main.require('./src/user');
+	var meta = require.main.require('./src/meta');
+	var db = require.main.require('./src/database');
+	var passport = module.parent.require('passport');
+	var passportLinkedIn = require('passport-linkedin-oauth2').Strategy;
+	var fs = module.parent.require('fs');
+	var path = module.parent.require('path');
+	var async = module.parent.require('async');
+	var winston = module.parent.require('winston');
+	var nconf = module.parent.require('nconf');
 
 	var constants = Object.freeze({
 		'name': "LinkedIn",
