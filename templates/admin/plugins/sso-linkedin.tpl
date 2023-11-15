@@ -17,7 +17,7 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Client Secret</label>
-						<input type="text" name="secret" title="Secret Key" class="form-control" placeholder="Secret Key">
+						<input type="text" name="secret" title="Secret Key" class="form-control">
 					</div>
 
 					<p class="form-text">

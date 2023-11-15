@@ -124,12 +124,23 @@
 					}
 
 					if (!uid) {
-						User.create({username: handle, email: email}, function(err, uid) {
-							if(err) {
+						User.create({ username: handle }, function (err, uid) {
+							if (err) {
 								return callback(err);
 							}
-
-							success(uid, false);
+							async.waterfall([
+								function (next) {
+									user.setUserField(uid, 'email', data.email, next);
+								},
+								function (next) {
+									user.email.sendValidationEmail(uid, { email: data.email });
+								},
+							], function (err) {
+								if (err) {
+									return callback(err)
+								}
+								success(uid, false);
+							});
 						});
 					} else {
 						success(uid, true); // Existing account -- merge
