@@ -7,7 +7,10 @@
 		passport = require.main.require('passport'),
 		passportLinkedIn = require('passport-linkedin-oauth2').Strategy,
 		winston = require.main.require('winston'),
-		nconf = require.main.require('nconf');
+		nconf = require.main.require('nconf'),
+		routeHelpers = require.main.require('./src/routes/helpers');
+
+	const authenticationController = require.main.require('./src/controllers/authentication');
 
 	const async = require('async');
 
@@ -22,12 +25,12 @@
 	var LinkedIn = {};
 
 	LinkedIn.init = function(params, callback) {
-		function render(req, res, next) {
-			res.render('admin/plugins/sso-linkedin', {});
-		}
-
-		params.router.get('/admin/plugins/sso-linkedin', params.middleware.admin.buildHeader, render);
-		params.router.get('/api/admin/plugins/sso-linkedin', render);
+		const { router } = params;
+		routeHelpers.setupAdminPageRoute(router, '/admin/plugins/sso-linkedin', function (req, res, next) {
+			res.render('admin/plugins/sso-linkedin', {
+				title: 'LinkedIn SSO',
+			});
+		})
 
 		callback();
 	}
@@ -39,14 +42,20 @@
 					clientID: settings['id'],
 					clientSecret: settings['secret'],
 					callbackURL: nconf.get('url') + '/auth/linkedin/callback',
-					scope: ['r_basicprofile', 'r_emailaddress'],
-					state: true
-				}, function(accessToken, refreshToken, profile, done) {
-					LinkedIn.login(profile.id, profile.displayName, profile._json.emailAddress, profile._json.pictureUrl, (profile._json.location ? profile._json.location.name : null), profile._json.publicProfileUrl, function(err, user) {
+					scope: ['email', 'profile', 'openid'],
+					state: true,
+					passReqToCallback: true,
+				}, function(req, accessToken, refreshToken, profile, done) {
+					LinkedIn.login(profile.id, profile.displayName, profile.email, profile.picture, function(err, user) {
 						if (err) {
 							return done(err);
 						}
-						done(null, user);
+						authenticationController.onSuccessfulLogin(req, user.uid, function (err) {
+							if (err) {
+								return done(err);
+							}
+							done(null, user);
+						});
 					});
 				}));
 
@@ -55,7 +64,16 @@
 					url: '/auth/linkedin',
 					callbackURL: '/auth/linkedin/callback',
 					icon: 'fa-linkedin-square',
-					scope: ''
+					icons: {
+						normal: 'fa-brands fa-linkedin-in',
+						square: 'fa-brands fa-linkedin',
+					},
+					labels: {
+						login: '[[social:sign-in-with-linkedin]]',
+						register: '[[social:sign-up-with-linkedin]]',
+					},
+					color: '#0a66c2',
+					scope: '',
 				});
 			}
 
@@ -63,7 +81,7 @@
 		});
 	};
 
-	LinkedIn.login = function(linkedInId, handle, email, picture, location, website, callback) {
+	LinkedIn.login = function(linkedInId, handle, email, picture, callback) {
 		LinkedIn.getUidByLinkedInId(linkedInId, function(err, uid) {
 			if(err) {
 				return callback(err);
@@ -87,14 +105,6 @@
 						if (picture && 0 < picture.length) {
 							data.uploadedpicture = picture;
 							data.picture = picture;
-						}
-
-						if (location && 0 < location.length) {
-							data.location = location;
-						}
-
-						if (website && 0 < website.length) {
-							data.website = website;
 						}
 					}
 
@@ -122,12 +132,23 @@
 					}
 
 					if (!uid) {
-						User.create({username: handle, email: email}, function(err, uid) {
-							if(err) {
+						User.create({ username: handle }, function (err, uid) {
+							if (err) {
 								return callback(err);
 							}
-
-							success(uid, false);
+							async.waterfall([
+								function (next) {
+									user.setUserField(uid, 'email', data.email, next);
+								},
+								function (next) {
+									user.email.sendValidationEmail(uid, { email: data.email });
+								},
+							], function (err) {
+								if (err) {
+									return callback(err)
+								}
+								success(uid, false);
+							});
 						});
 					} else {
 						success(uid, true); // Existing account -- merge

@@ -22,10 +22,10 @@
   },
   "dependencies": {
     "async": "^3.2.0",
-    "passport-linkedin-oauth2": "joe1chen/passport-linkedin-oauth2#auto-state"
+    "passport-linkedin-oauth2": "2.0.0"
   },
   "nbbpm": {
-    "compatibility": "^1.15.0"
+    "compatibility": "^3.2.0"
   },
   "homepage": "https://github.com/joe1chen/nodebb-plugin-sso-linkedin-oauth2",
   "devDependencies": {},
