@@ -10,6 +10,8 @@
 		nconf = require.main.require('nconf'),
 		routeHelpers = require.main.require('./src/routes/helpers');
 
+	const authenticationController = require.main.require('./src/controllers/authentication');
+
 	const async = require('async');
 
 	var constants = Object.freeze({
@@ -41,13 +43,19 @@
 					clientSecret: settings['secret'],
 					callbackURL: nconf.get('url') + '/auth/linkedin/callback',
 					scope: ['email', 'profile', 'openid'],
-					state: true
-				}, function(accessToken, refreshToken, profile, done) {
+					state: true,
+					passReqToCallback: true,
+				}, function(req, accessToken, refreshToken, profile, done) {
 					LinkedIn.login(profile.id, profile.displayName, profile.email, profile.picture, function(err, user) {
 						if (err) {
 							return done(err);
 						}
-						done(null, user);
+						authenticationController.onSuccessfulLogin(req, user.uid, function (err) {
+							if (err) {
+								return done(err);
+							}
+							done(null, user);
+						});
 					});
 				}));
 
